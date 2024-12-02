@@ -88,5 +88,24 @@ void DataPanel::render(){
     ImGui::EndChild();
     // std::cout << "end data panel\n";
 }
+void MainWindow::setupInputField() {
+    auto* inputLabel = new QLabel("Send to Serial:", this);
+    auto* inputField = new QLineEdit(this);
+    auto* sendButton = new QPushButton("Send", this);
+
+    // Layout
+    auto* inputLayout = new QHBoxLayout();
+    inputLayout->addWidget(inputLabel);
+    inputLayout->addWidget(inputField);
+    inputLayout->addWidget(sendButton);
+
+    mainLayout->addLayout(inputLayout);
+
+    // Connect button to sendData
+    connect(sendButton, &QPushButton::clicked, [this, inputField]() {
+        std::string input = inputField->text().toStdString();
+        serialManager.sendData(input);  // Call the new sendData method
+    });
+}
 
 } // namespace bsp
