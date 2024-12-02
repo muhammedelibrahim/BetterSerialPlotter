@@ -245,5 +245,13 @@ bool SerialManager::comport_valid(){
     return comport_num > -1;
 #endif
 }
+    
+void SerialManager::sendData(const std::string& data) {
+    if (serialPort.isOpen()) {
+        serialPort.write(data);
+        serialPort.write("\n"); // Optionally add a newline
+    }
+}
 
 } // namespace bsp
+
